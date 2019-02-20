@@ -1,0 +1,28 @@
+```{r}
+library(rvest)
+library(dbplyr)
+library(tidyr)
+library(stringr)   
+library(lubridate)
+
+url <- read_html("http://www.leadthecompetition.in/GK/indian-leaders-birth-dates-and-memorials.html")
+
+read1 <- html_table(url)[[1]]
+read <- data.frame(read1)
+read
+
+read$weeks_dob <- floor(
+  difftime((Sys.Date()),
+           as.Date(as.character(read$Date.of.birth),'02 oct 1869',format="%d %B %Y"),unit="weeks")/52.24)
+
+read
+
+read$weeks_dod <- floor(
+  difftime((Sys.Date()),
+           as.Date(as.character(read$Date.of.death),'30 jan 1948',format="%d %B %Y"),unit="weeks")/52.24)
+
+read
+
+
+```
+
